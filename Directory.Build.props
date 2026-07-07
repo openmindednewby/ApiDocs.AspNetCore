@@ -1,0 +1,46 @@
+<Project>
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+
+    <!-- Package metadata -->
+    <Authors>DLoizides</Authors>
+    <Company>dloizides.com</Company>
+    <PackageProjectUrl>https://github.com/openmindednewby/ApiDocs.AspNetCore</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/openmindednewby/ApiDocs.AspNetCore</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageTags>openapi;swagger;scalar;api-docs;aspnetcore;documentation;self-contained</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Description>One-line, branded, self-contained OpenAPI docs portal for ASP.NET Core services. Serves a branded Scalar interactive reference AND the raw Swagger UI over your existing /swagger/v1/swagger.json — with the Scalar and Swagger UI browser assets VENDORED as embedded resources (no CDN, CSP-safe). Per-service branding (title, colors, logo), deep-dive guide pages, and configurable auth gating via app.MapApiDocs(new ApiDocsOptions { ... }).</Description>
+
+    <!-- Versioning -->
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+
+    <!-- NuGet settings -->
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+
+    <!-- Documentation -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+</Project>

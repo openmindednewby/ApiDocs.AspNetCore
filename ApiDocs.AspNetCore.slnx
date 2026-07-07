@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ApiDocs.AspNetCore/ApiDocs.AspNetCore.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ApiDocs.AspNetCore.Tests/ApiDocs.AspNetCore.Tests.csproj" />
+  </Folder>
+</Solution>
