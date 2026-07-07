@@ -1,4 +1,4 @@
-<Project>
+﻿<Project>
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <LangVersion>latest</LangVersion>
@@ -16,12 +16,12 @@
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageTags>openapi;swagger;scalar;api-docs;aspnetcore;documentation;self-contained</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Description>One-line, branded, self-contained OpenAPI docs portal for ASP.NET Core services. Serves a branded Scalar interactive reference AND the raw Swagger UI over your existing /swagger/v1/swagger.json — with the Scalar and Swagger UI browser assets VENDORED as embedded resources (no CDN, CSP-safe). Per-service branding (title, colors, logo), deep-dive guide pages, and configurable auth gating via app.MapApiDocs(new ApiDocsOptions { ... }).</Description>
+    <Description>One-line, branded, self-contained OpenAPI docs portal for ASP.NET Core services. Serves a branded Scalar interactive reference AND the raw Swagger UI over your existing /swagger/v1/swagger.json â€” with the Scalar and Swagger UI browser assets VENDORED as embedded resources (no CDN, CSP-safe). Per-service branding (title, colors, logo), deep-dive guide pages, and configurable auth gating via app.MapApiDocs(new ApiDocsOptions { ... }).</Description>
 
     <!-- Versioning -->
-    <Version>1.0.0</Version>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
+    <Version>1.0.1</Version>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
 
     <!-- NuGet settings -->
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
@@ -44,3 +44,4 @@
     <None Include="$(MSBuildThisFileDirectory)README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 </Project>
+
