@@ -1,5 +1,8 @@
 [CmdletBinding()]
 param(
+  # Explicit opt-in for a major bump. The publish guard refuses '-Bump major' without it.
+  [switch]$AllowMajor,
+
   [Parameter(Mandatory = $true)]
   [ValidateSet("patch", "minor", "major")]
   [string]$Bump,
@@ -120,6 +123,15 @@ $targetVersion = Get-BumpedVersion -CurrentVersion $currentVersion -Bump $Bump
 Write-Host "Building and publishing $packageId package..." -ForegroundColor Cyan
 Write-Host "Version: $currentVersion -> $targetVersion"
 Write-Host ""
+
+# --- MANDATORY publish guard: refuses a dirty or untracked working tree, a stray major,
+# --- and a version that is already live on nuget.org. If the guard file is missing this
+# --- THROWS; it is never skipped.
+$guardPath = Join-Path (Split-Path -Parent $PSScriptRoot) 'publish-guard.ps1'
+if (-not (Test-Path -LiteralPath $guardPath)) {
+  throw "publish-guard.ps1 not found at $guardPath. The guard is MANDATORY - it is the only thing standing between an uncommitted working tree and nuget.org. Restore it before publishing."
+}
+& $guardPath -PackageDir $PSScriptRoot -Bump $Bump -AllowMajor:$AllowMajor
 
 # Update version
 Set-VersionInPropsFile -PropsPath $propsPath -Version $targetVersion
