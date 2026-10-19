@@ -1,4 +1,4 @@
-using System.Collections.Concurrent;
+using System.Collections.Frozen;
 using System.Reflection;
 
 namespace ApiDocs.AspNetCore.Rendering;
@@ -28,7 +28,13 @@ public static class EmbeddedAsset
     private const string ResourceInfix = ".Assets.";
 
     private static readonly Assembly OwnAssembly = typeof(EmbeddedAsset).Assembly;
-    private static readonly ConcurrentDictionary<string, byte[]> Cache = new();
+    private static readonly FrozenDictionary<string, Lazy<byte[]>> Assets = OwnAssembly
+        .GetManifestResourceNames()
+        .Where(name => name.Contains(ResourceInfix, StringComparison.Ordinal))
+        .ToFrozenDictionary(
+            name => name[(name.IndexOf(ResourceInfix, StringComparison.Ordinal) + ResourceInfix.Length)..],
+            name => new Lazy<byte[]>(() => ReadResource(name)),
+            StringComparer.Ordinal);
 
     /// <summary>
     /// Returns the bytes of the named embedded asset (e.g. <see cref="ScalarBundle"/>).
@@ -36,15 +42,10 @@ public static class EmbeddedAsset
     /// <exception cref="InvalidOperationException">The asset is not embedded in the assembly.</exception>
     public static byte[] GetBytes(string fileName)
     {
-        return Cache.GetOrAdd(fileName, static name =>
-        {
-            var resourceName = ResolveResourceName(name);
-            using var stream = OwnAssembly.GetManifestResourceStream(resourceName)
-                ?? throw new InvalidOperationException($"Embedded asset stream '{resourceName}' could not be opened.");
-            using var memory = new MemoryStream();
-            stream.CopyTo(memory);
-            return memory.ToArray();
-        });
+        return Assets.TryGetValue(fileName, out var asset)
+            ? asset.Value
+            : throw new InvalidOperationException(
+                $"Embedded asset '{fileName}' was not found. Available: {string.Join(", ", OwnAssembly.GetManifestResourceNames())}");
     }
 
     /// <summary>Maps a file name to its HTTP content type.</summary>
@@ -56,13 +57,12 @@ public static class EmbeddedAsset
         return "application/octet-stream";
     }
 
-    private static string ResolveResourceName(string fileName)
+    private static byte[] ReadResource(string resourceName)
     {
-        var names = OwnAssembly.GetManifestResourceNames();
-        var match = Array.Find(names, n =>
-            n.EndsWith(ResourceInfix + fileName, StringComparison.Ordinal));
-
-        return match ?? throw new InvalidOperationException(
-            $"Embedded asset '{fileName}' was not found. Available: {string.Join(", ", names)}");
+        using var stream = OwnAssembly.GetManifestResourceStream(resourceName)
+            ?? throw new InvalidOperationException($"Embedded asset stream '{resourceName}' could not be opened.");
+        using var memory = new MemoryStream();
+        stream.CopyTo(memory);
+        return memory.ToArray();
     }
 }
