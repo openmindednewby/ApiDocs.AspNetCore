@@ -40,7 +40,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dloizides.Analyzers" Version="0.6.0" PrivateAssets="all" />
+    <PackageReference Include="Dloizides.Analyzers" Version="0.10.1" PrivateAssets="all" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
   </ItemGroup>
 
@@ -49,6 +49,7 @@
   </ItemGroup>
   <PropertyGroup Label="RULES-ANALYZER-1 baselines">
     <RulesAnalyzerBaselineRoot>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', '.'))</RulesAnalyzerBaselineRoot>
+    <DloizidesBaselinedRulesAsErrors>true</DloizidesBaselinedRulesAsErrors>
   </PropertyGroup>
   <ItemGroup Label="RULES-ANALYZER-1 baselines">
     <AdditionalFiles Include="$(RulesAnalyzerBaselineRoot)linq-syntax-baseline.txt" Condition="Exists('$(RulesAnalyzerBaselineRoot)linq-syntax-baseline.txt')" />
