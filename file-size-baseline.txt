@@ -1,0 +1,1 @@
+src/ApiDocs.AspNetCore/Rendering/DocsPageRenderer.cs 329

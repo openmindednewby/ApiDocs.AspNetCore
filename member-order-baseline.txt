@@ -1,0 +1,3 @@
+tests/ApiDocs.AspNetCore.Tests/Extensions/ApiDocsEndpointTests.cs 2
+tests/ApiDocs.AspNetCore.Tests/Rendering/DocsPageRendererTests.cs 1
+tests/ApiDocs.AspNetCore.Tests/Swagger/OAuth2PkceSecurityTests.cs 1
