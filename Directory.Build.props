@@ -47,10 +47,13 @@
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
+  <PropertyGroup Label="RULES-ANALYZER-1 baselines">
+    <RulesAnalyzerBaselineRoot>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', '.'))</RulesAnalyzerBaselineRoot>
+  </PropertyGroup>
   <ItemGroup Label="RULES-ANALYZER-1 baselines">
-    <AdditionalFiles Include="$([MSBuild]::NormalizePath('$(MSBuildThisFileDirectory)', '.', 'linq-syntax-baseline.txt'))" Condition="Exists('$([MSBuild]::NormalizePath('$(MSBuildThisFileDirectory)', '.', 'linq-syntax-baseline.txt'))')" />
-    <AdditionalFiles Include="$([MSBuild]::NormalizePath('$(MSBuildThisFileDirectory)', '.', 'member-order-baseline.txt'))" Condition="Exists('$([MSBuild]::NormalizePath('$(MSBuildThisFileDirectory)', '.', 'member-order-baseline.txt'))')" />
-    <AdditionalFiles Include="$([MSBuild]::NormalizePath('$(MSBuildThisFileDirectory)', '.', 'file-size-baseline.txt'))" Condition="Exists('$([MSBuild]::NormalizePath('$(MSBuildThisFileDirectory)', '.', 'file-size-baseline.txt'))')" />
+    <AdditionalFiles Include="$(RulesAnalyzerBaselineRoot)linq-syntax-baseline.txt" Condition="Exists('$(RulesAnalyzerBaselineRoot)linq-syntax-baseline.txt')" />
+    <AdditionalFiles Include="$(RulesAnalyzerBaselineRoot)member-order-baseline.txt" Condition="Exists('$(RulesAnalyzerBaselineRoot)member-order-baseline.txt')" />
+    <AdditionalFiles Include="$(RulesAnalyzerBaselineRoot)file-size-baseline.txt" Condition="Exists('$(RulesAnalyzerBaselineRoot)file-size-baseline.txt')" />
   </ItemGroup>
 </Project>
 
